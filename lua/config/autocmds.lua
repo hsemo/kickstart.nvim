@@ -1,0 +1,12 @@
+-- vim.api.nvim_create_autocmd('FileType', {
+-- 	desc = 'Change indent for js,ts,html,jsx,tsx',
+--
+-- 	pattern = {'javascript', 'typescript', 'html', 'javascriptreact', 'typescriptreact'},
+-- 	group = vim.api.nvim_create_augroup('indent_for_js', { clear = true }),
+-- 	callback = function (opts)
+-- 		-- print('executed autocmd')
+-- 		vim.opt.tabstop = 2
+-- 		vim.opt.softtabstop = 2
+-- 		vim.opt.shiftwidth = 2
+-- 	end,
+-- })

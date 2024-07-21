@@ -25,10 +25,15 @@ map("n", "<C-k>", "<C-w>k", { desc = "Go to upper window", remap = true })
 map("n", "<C-l>", "<C-w>l", { desc = "Go to right window", remap = true })
 
 -- Resize window using <ctrl> arrow keys
-map("n", "<C-Up>", "<cmd>resize +2<cr>", { desc = "Increase window height" })
-map("n", "<C-Down>", "<cmd>resize -2<cr>", { desc = "Decrease window height" })
-map("n", "<C-Left>", "<cmd>vertical resize -2<cr>", { desc = "Decrease window width" })
-map("n", "<C-Right>", "<cmd>vertical resize +2<cr>", { desc = "Increase window width" })
+map("n", "<C-S-Up>", "<cmd>resize +2<cr>", { desc = "Increase window height" })
+map("n", "<C-S-Down>", "<cmd>resize -2<cr>", { desc = "Decrease window height" })
+map("n", "<C-S-Left>", "<cmd>vertical resize -2<cr>", { desc = "Decrease window width" })
+map("n", "<C-S-Right>", "<cmd>vertical resize +2<cr>", { desc = "Increase window width" })
+-- Resize window using <ctrl> hjkl keys
+map("n", "<C-S-k>", "<cmd>resize +2<cr>", { desc = "Increase window height" })
+map("n", "<C-S-j>", "<cmd>resize -2<cr>", { desc = "Decrease window height" })
+map("n", "<C-S-h>", "<cmd>vertical resize -2<cr>", { desc = "Decrease window width" })
+map("n", "<C-S-l>", "<cmd>vertical resize +2<cr>", { desc = "Increase window width" })
 
 -- Move Lines
 map("n", "<A-j>", "<cmd>m .+1<cr>==", { desc = "Move down" })
@@ -39,13 +44,13 @@ map("v", "<A-j>", ":m '>+1<cr>gv=gv", { desc = "Move down" })
 map("v", "<A-k>", ":m '<-2<cr>gv=gv", { desc = "Move up" })
 
 -- buffers
+map("n", "<leader>b", "", {desc="Buffers"})
 -- map("n", "<S-h>", "<cmd>bprevious<cr>", { desc = "Prev buffer" })
 -- map("n", "<S-l>", "<cmd>bnext<cr>", { desc = "Next buffer" })
 -- map("n", "[b", "<cmd>bprevious<cr>", { desc = "Prev buffer" })
 -- map("n", "]b", "<cmd>bnext<cr>", { desc = "Next buffer" })
 -- map("n", "<leader>bb", "<cmd>e #<cr>", { desc = "Switch to Other Buffer" })
 map("n", "<leader>bd", "<cmd>bdelete<cr>", { desc = "Delete Current Buffer" })
--- map("n", "<leader>`", "<cmd>e #<cr>", { desc = "Switch to Other Buffer" })
 
 -- Clear search with <esc>
 map({ "i", "n" }, "<esc>", "<cmd>noh<cr><esc>", { desc = "Escape and clear hlsearch" })
@@ -57,8 +62,9 @@ map({ "i", "x", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "Save file" })
 map("n", "<leader>l", "<cmd>Lazy<cr>", { desc = "Lazy" })
 
 -- new file
-map("n", "<leader>fn", "<cmd>enew<cr>", { desc = "New File" })
+-- map("n", "<leader>fn", "<cmd>enew<cr>", { desc = "New File" })
 
+map("n", "<leader>x", "", {desc="Quickfix"})
 map("n", "<leader>xl", "<cmd>lopen<cr>", { desc = "Location List" })
 map("n", "<leader>xq", "<cmd>copen<cr>", { desc = "Quickfix List" })
 
@@ -66,22 +72,22 @@ map("n", "[q", vim.cmd.cprev, { desc = "Previous quickfix" })
 map("n", "]q", vim.cmd.cnext, { desc = "Next quickfix" })
 
 ------------------------------------ Colorizer
-map("n", "<leader>ccc", "<cmd>ColorizerToggle<cr>", { desc = "ColorizerToggle" })
-map("n", "<leader>cca", "<cmd>ColorizerAttachToBuffer<cr>", { desc = "ColorizerAttachToBuffer" })
-map("n", "<leader>ccd", "<cmd>ColorizerDetachFromBuffer<cr>", { desc = "ColorizerDetachFromBuffer" })
-map("n", "<leader>ccr", "<cmd>ColorizerReloadAllBuffers<cr>", { desc = "ColorizerReloadAllBuffers" })
+-- map("n", "<leader>ccc", "<cmd>ColorizerToggle<cr>", { desc = "ColorizerToggle" })
+-- map("n", "<leader>cca", "<cmd>ColorizerAttachToBuffer<cr>", { desc = "ColorizerAttachToBuffer" })
+-- map("n", "<leader>ccd", "<cmd>ColorizerDetachFromBuffer<cr>", { desc = "ColorizerDetachFromBuffer" })
+-- map("n", "<leader>ccr", "<cmd>ColorizerReloadAllBuffers<cr>", { desc = "ColorizerReloadAllBuffers" })
 
 ------------------------------------ Session manager folke/persistence
 -- restore the session for the current directory
-vim.api.nvim_set_keymap("n", "<leader>qs", [[<cmd>lua require("persistence").load()<cr>]],
-	{ desc = 'Restore the Session for cwd' })
+-- vim.api.nvim_set_keymap("n", "<leader>qs", [[<cmd>lua require("persistence").load()<cr>]],
+-- 	{ desc = 'Restore the Session for cwd' })
 
 -- restore the last session
-vim.api.nvim_set_keymap("n", "<leader>ql", [[<cmd>lua require("persistence").load({ last = true })<cr>]],
-	{ desc = 'Restore the last session' })
+-- vim.api.nvim_set_keymap("n", "<leader>ql", [[<cmd>lua require("persistence").load({ last = true })<cr>]],
+-- 	{ desc = 'Restore the last session' })
 
 -- stop Persistence => session won't be saved on exit
-vim.api.nvim_set_keymap("n", "<leader>qd", [[<cmd>lua require("persistence").stop()<cr>]], { desc = 'Stop Persistence' })
+-- vim.api.nvim_set_keymap("n", "<leader>qd", [[<cmd>lua require("persistence").stop()<cr>]], { desc = 'Stop Persistence' })
 
 ------------------------------------ Window Manipulation
 -- map({ "n", "v" }, "<leader>w", "<C-w>", { desc = "Window" })
@@ -102,13 +108,21 @@ map("v", "<leader>P", '"+P', { desc = "Paste from system clipboard" })
 -- to differentiate between yank and delete
 -- yank to "0 register (default behaviour) and paste from "0 register (custom behaviour)
 -- deleted and changed text will go into "- register
-map("n", "p", '"0p', { desc = "Paste from last yanked register \"0" })
-map("v", "p", '"0p', { desc = "Paste from last yanked register \"0" })
-map("n", "P", '"0P', { desc = "Paste from last yanked register \"0" })
-map("v", "P", '"0P', { desc = "Paste from last yanked register \"0" })
-map("n", "<leader>dd", '"0d', { desc = "Cut to yank register \"0" })
-map("v", "<leader>dd", '"0d', { desc = "Cut to yank register \"0" })
-map("n", "<leader>dc", '"0c', { desc = "Cut and change to yank register \"0" })
-map("v", "<leader>dc", '"0c', { desc = "Cut and change to yank register \"0" })
+-- map("n", "p", '"0p', { desc = "Paste from last yanked register \"0" })
+-- map("v", "p", '"0p', { desc = "Paste from last yanked register \"0" })
+-- map("n", "P", '"0P', { desc = "Paste from last yanked register \"0" })
+-- map("v", "P", '"0P', { desc = "Paste from last yanked register \"0" })
+-- map("n", "d", '"0d', { desc = "Cut to yank register \"0" })
+-- map("v", "d", '"0d', { desc = "Cut to yank register \"0" })
+-- map("n", "c", '"0c', { desc = "and change to yank register \"0" })
+-- map("v", "c", '"0c', { desc = "Cut and change to yank register \"0" })
 
-map({ 'n', 'v' }, '<leader>e', '<cmd>Neotree<cr>', { desc = 'Explorer NeoTree' })
+-- map({ 'n', 'v' }, '<leader>e', '<cmd>Neotree<cr>', { desc = 'Explorer NeoTree' })
+map({ 'n', 'v' }, '<leader>e', '<cmd>Oil<cr>', { desc = 'Edit parent dir' })
+
+-- Session manager shortcuts
+map('n', '<leader>f', '', {desc = 'SessionManager'})
+map('n', '<leader>ff', '<cmd>SessionManager load_session<cr>', {desc = 'Load session'})
+map('n', '<leader>fd', '<cmd>SessionManager load_current_dir_session<cr>', {desc = 'Load dir session'})
+map('n', '<leader>fg', '<cmd>SessionManager load_git_session<cr>', {desc = 'Load git session'})
+map('n', '<leader>fl', '<cmd>SessionManager load_last_session<cr>', {desc = 'Load last session'})

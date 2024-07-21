@@ -14,8 +14,11 @@ return {
       ensure_installed = {
         "bash",
         "c",
+        "css",
         "diff",
+        "fish",
         "html",
+        "hyprlang",
         "javascript",
         "jsdoc",
         "json",
@@ -102,5 +105,11 @@ return {
         },
       },
     }
+
+    -- hyprlang treesitter file type support
+    vim.filetype.add({
+      pattern = { [".*/hypr/.*%.conf"] = "hyprlang" },
+    })
+
   end, 0)
 }

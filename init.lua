@@ -73,8 +73,6 @@ require('lazy').setup({
     },
   },
 
-  -- Useful plugin to show you pending keybinds.
-  { 'folke/which-key.nvim',  opts = {} },
   {
     -- Adds git related signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
@@ -173,6 +171,10 @@ require('lazy').setup({
           variables = 'none'
         },
 
+        highlights = {
+          ["@comment"] = { fg = '#737380' },
+        },
+
       })
       vim.cmd.colorscheme 'onedark'
     end,
@@ -188,12 +190,45 @@ require('lazy').setup({
       scope = {
         show_start = false,
         show_end = false
+      },
+      indent = {
+        -- Alternatives:
+        --   • left aligned solid
+        --     • `▏`
+        --     • `▎` (default)
+        --     • `▍`
+        --     • `▌`
+        --     • `▋`
+        --     • `▊`
+        --     • `▉`
+        --     • `█`
+        --   • center aligned solid
+        --     • `│`
+        --     • `┃`
+        --   • right aligned solid
+        --     • `▕`
+        --     • `▐`
+        --   • center aligned dashed
+        --     • `╎`
+        --     • `╏`
+        --     • `┆`
+        --     • `┇`
+        --     • `┊`
+        --     • `┋`
+        --   • center aligned double
+        --     • `║`
+        char = "┃"
       }
     },
   },
 
   -- "gc" to comment visual regions/lines
   { 'numToStr/Comment.nvim', opts = {} },
+
+  -- telescope ui-select
+  {
+    'nvim-telescope/telescope-ui-select.nvim'
+  },
 
   -- Fuzzy Finder (files, lsp, etc)
   {
@@ -214,6 +249,34 @@ require('lazy').setup({
         end,
       },
     },
+    config = function()
+      require("telescope").setup {
+        extensions = {
+          ["ui-select"] = {
+            require("telescope.themes").get_dropdown {
+              -- even more opts
+            }
+
+            -- pseudo code / specification for writing custom displays, like the one
+            -- for "codeactions"
+            -- specific_opts = {
+            --   [kind] = {
+            --     make_indexed = function(items) -> indexed_items, width,
+            --     make_displayer = function(widths) -> displayer
+            --     make_display = function(displayer) -> function(e)
+            --     make_ordinal = function(e) -> string
+            --   },
+            --   -- for example to disable the custom builtin "codeactions" display
+            --      do the following
+            --   codeactions = false,
+            -- }
+          }
+        }
+      }
+      -- To get ui-select loaded and working with telescope, you need to call
+      -- load_extension, somewhere after setup function:
+      require("telescope").load_extension("ui-select")
+    end
   },
 
   -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
@@ -236,6 +299,9 @@ require("config.options")
 
 -- loading keymaps
 require("config.keymaps")
+
+-- loading autocmds
+require("config.autocmds")
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
@@ -374,24 +440,6 @@ local on_attach = function(_, bufnr)
   end, { desc = 'Format current buffer with LSP' })
 end
 
--- document existing key chains
-require('which-key').register {
-  ['<leader>c'] = { name = '[C]ode', _ = 'which_key_ignore' },
-  ['<leader>d'] = { name = '[D]ocument', _ = 'which_key_ignore' },
-  ['<leader>g'] = { name = '[G]it', _ = 'which_key_ignore' },
-  ['<leader>h'] = { name = 'Git [H]unk', _ = 'which_key_ignore' },
-  ['<leader>r'] = { name = '[R]ename', _ = 'which_key_ignore' },
-  ['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
-  ['<leader>t'] = { name = '[T]oggle', _ = 'which_key_ignore' },
-  ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
-}
--- register which-key VISUAL mode
--- required for visual <leader>hs (hunk stage) to work
-require('which-key').register({
-  ['<leader>'] = { name = 'VISUAL <leader>' },
-  ['<leader>h'] = { 'Git [H]unk' },
-}, { mode = 'v' })
-
 -- mason-lspconfig requires that these setup functions are called in this order
 -- before setting up the servers.
 require('mason').setup()
@@ -413,14 +461,14 @@ local servers = {
   -- tsserver = {},
   -- html = { filetypes = { 'html', 'twig', 'hbs'} },
 
-  lua_ls = {
-    Lua = {
-      workspace = { checkThirdParty = false },
-      telemetry = { enable = false },
-      -- NOTE: toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-      -- diagnostics = { disable = { 'missing-fields' } },
-    },
-  },
+  -- lua_ls = {
+  --   Lua = {
+  --     workspace = { checkThirdParty = false },
+  --     telemetry = { enable = false },
+  --     -- NOTE: toggle below to ignore Lua_LS's noisy `missing-fields` warnings
+  --     -- diagnostics = { disable = { 'missing-fields' } },
+  --   },
+  -- },
 }
 
 -- Setup neovim lua configuration
@@ -518,19 +566,51 @@ local configs = require('lspconfig/configs')
 local lsp_capabilities = vim.lsp.protocol.make_client_capabilities()
 lsp_capabilities.textDocument.completion.completionItem.snippetSupport = true
 
-lspconfig.emmet_ls.setup({
-  -- on_attach = on_attach,
-  capabilities = lsp_capabilities,
-  filetypes = { "css", "eruby", "html", "javascript", "javascriptreact", "less", "sass", "scss", "svelte", "pug", "typescriptreact", "vue" },
-  init_options = {
-    html = {
-      options = {
-        -- For possible options, see: https://github.com/emmetio/emmet/blob/master/src/config.ts#L79-L267
-        ["bem.enabled"] = true,
-      },
-    },
-  }
-})
+-- lspconfig.emmet_ls.setup({
+--   -- on_attach = on_attach,
+--   capabilities = lsp_capabilities,
+--   filetypes = { "css", "eruby", "html", "javascript", "javascriptreact", "less", "sass", "scss", "svelte", "pug", "typescriptreact", "vue" },
+--   init_options = {
+--     html = {
+--       options = {
+--         -- For possible options, see: https://github.com/emmetio/emmet/blob/master/src/config.ts#L79-L267
+--         ["bem.enabled"] = true,
+--       },
+--     },
+--   }
+-- })
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
+
+
+-- neovide configuration
+if vim.g.neovide then
+  -- vim.o.guifont = "Fira Code,Symbols Nerd Font Mono:h13"
+  vim.o.guifont = "BlexMono Nerd Font:h13"
+
+  vim.opt.linespace = 0
+
+  vim.g.neovide_transparency = 1.0
+  vim.g.neovide_position_animation_length = 0.15
+  vim.g.neovide_scroll_animation_length = 0.2
+  vim.g.neovide_scroll_animation_far_lines = 1
+  vim.g.neovide_hide_mouse_when_typing = false
+  vim.g.neovide_refresh_rate = 60
+
+  vim.g.neovide_cursor_animation_length = 0.05
+  vim.g.neovide_cursor_trail_size = 0.2
+  vim.g.neovide_cursor_antialiasing = true
+  vim.g.neovide_cursor_animate_in_insert_mode = true
+  vim.g.neovide_cursor_animate_command_line = true
+  vim.g.neovide_cursor_unfocused_outline_width = 0.125
+  vim.g.neovide_cursor_smooth_blink = false
+  -- (long) railgun, torpedo, pixiedust
+  -- (short) sonicboom, ripple, wireframe,
+  vim.g.neovide_cursor_vfx_mode = "sonicboom"
+  vim.g.neovide_cursor_vfx_particle_lifetime = 1.0
+  vim.g.neovide_cursor_vfx_particle_density = 7.0
+  vim.g.neovide_cursor_vfx_particle_speed = 10.0
+  vim.g.neovide_cursor_vfx_particle_phase = 1.5 -- only for railgun
+  vim.g.neovide_cursor_vfx_particle_curl = 1.0 -- only for railgun
+end
