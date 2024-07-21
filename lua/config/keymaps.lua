@@ -92,9 +92,9 @@ map("n", "]q", vim.cmd.cnext, { desc = "Next quickfix" })
 ------------------------------------ Window Manipulation
 -- map({ "n", "v" }, "<leader>w", "<C-w>", { desc = "Window" })
 
--- some usefull keymaps
 map("n", "<leader>ts", ":lua require('onedark').toggle()<cr>", { desc = "Toggle onedark style" })
 
+-- system clipboard support
 map("n", "<leader>y", '"+y', { desc = "Yank to system clipboard" })
 map("v", "<leader>y", '"+y', { desc = "Yank to system clipboard" })
 map("n", "<leader>Y", '"+Y', { desc = "Yank to system clipboard" })
@@ -117,10 +117,13 @@ map("v", "<leader>P", '"+P', { desc = "Paste from system clipboard" })
 -- map("n", "c", '"0c', { desc = "and change to yank register \"0" })
 -- map("v", "c", '"0c', { desc = "Cut and change to yank register \"0" })
 
+-- from primeagen
+map("x", "p", '"_dP')
+
 -- map({ 'n', 'v' }, '<leader>e', '<cmd>Neotree<cr>', { desc = 'Explorer NeoTree' })
 map({ 'n', 'v' }, '<leader>e', '<cmd>Oil<cr>', { desc = 'Edit parent dir' })
 
--- Session manager shortcuts
+-- Session management
 map('n', '<leader>f', '', {desc = 'SessionManager'})
 map('n', '<leader>ff', '<cmd>SessionManager load_session<cr>', {desc = 'Load session'})
 map('n', '<leader>fd', '<cmd>SessionManager load_current_dir_session<cr>', {desc = 'Load dir session'})

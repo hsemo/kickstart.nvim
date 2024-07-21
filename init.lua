@@ -70,6 +70,16 @@ require('lazy').setup({
       -- Adds a number of user-friendly snippets
       'rafamadriz/friendly-snippets',
       'hrsh7th/cmp-buffer',
+
+      -- nvim and lua related
+      'hrsh7th/cmp-nvim-lua',
+      'hrsh7th/cmp-cmdline',
+
+      -- some other cmp
+      'mtoohey31/cmp-fish',
+
+      -- ripgrep
+      -- 'lukas-reineke/cmp-rg',
     },
   },
 
@@ -558,6 +568,9 @@ cmp.setup {
         end
       },
     },
+    { name = 'nvim_lua' },
+    { name = 'fish' },
+    -- { name = 'rg' },
   }
 }
 
