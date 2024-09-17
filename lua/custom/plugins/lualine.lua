@@ -33,10 +33,10 @@ return {
               newfile = '[New]',     -- Text to show for newly created file before first write
             }
           }
-        }, -- { 'filetype', icon_only = true, seprator = "" }
+        },
         -- lualine_x = { { 'buffers', padding = { left = 1, right = 0 }, symbols = { alternate_file = '' } } },
         lualine_x = { 'diagnostics' },
-        lualine_y = { 'progress' },
+        lualine_y = { 'progress', 'filesize' },
         lualine_z = { 'location' },
       },
       inactive_sections = {

@@ -15,6 +15,8 @@ return {
     -- { "<leader>bk", "<Cmd>BufferLineMovePrev<CR>",             desc = "Move buffer to the left" },
     { "<esc>h", "<Cmd>BufferLineMovePrev<CR>",             desc = "Move buffer to the left" },
     { "<esc>l", "<Cmd>BufferLineMoveNext<CR>",             desc = "Move buffer to the right" },
+    { "<leader>bb", "<cmd>BufferLinePick<cr>",             desc = "Pick buffer" },
+    { "<leader>bx", "<cmd>BufferLinePickClose<cr>",             desc = "Pick close buffer" },
   },
   opts = {
     options = {

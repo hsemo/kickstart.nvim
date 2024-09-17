@@ -50,7 +50,8 @@ map("n", "<leader>b", "", {desc="Buffers"})
 -- map("n", "[b", "<cmd>bprevious<cr>", { desc = "Prev buffer" })
 -- map("n", "]b", "<cmd>bnext<cr>", { desc = "Next buffer" })
 -- map("n", "<leader>bb", "<cmd>e #<cr>", { desc = "Switch to Other Buffer" })
-map("n", "<leader>bd", "<cmd>bdelete<cr>", { desc = "Delete Current Buffer" })
+map("n", "<leader>w", "<cmd>bdelete<cr>", { desc = "Delete Current Buffer" })
+map("n", "<C-x>", "<cmd>bdelete<cr>", { desc = "Delete Current Buffer" })
 
 -- Clear search with <esc>
 map({ "i", "n" }, "<esc>", "<cmd>noh<cr><esc>", { desc = "Escape and clear hlsearch" })
@@ -119,6 +120,8 @@ map("v", "<leader>P", '"+P', { desc = "Paste from system clipboard" })
 
 -- from primeagen
 map("x", "p", '"_dP')
+map("x", "<C-u>", '<C-u>zz')
+map("x", "<C-d>", '<C-d>zz')
 
 -- map({ 'n', 'v' }, '<leader>e', '<cmd>Neotree<cr>', { desc = 'Explorer NeoTree' })
 map({ 'n', 'v' }, '<leader>e', '<cmd>Oil<cr>', { desc = 'Edit parent dir' })

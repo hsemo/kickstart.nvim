@@ -50,7 +50,15 @@ return {
       -- You can specify additional Treesitter modules here: -- For example: -- playground = {--enable = true,-- },
       modules = {},
       highlight = { enable = true },
-      indent = { enable = true },
+      indent = {
+        enable = true,
+        -- disable = {
+        --   "javascript",
+        --   "javascriptreact",
+        --   "typescript",
+        --   "typescriptreact",
+        -- }
+      },
       incremental_selection = {
         enable = true,
         keymaps = {
@@ -110,6 +118,5 @@ return {
     vim.filetype.add({
       pattern = { [".*/hypr/.*%.conf"] = "hyprlang" },
     })
-
   end, 0)
 }

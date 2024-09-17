@@ -233,7 +233,7 @@ require('lazy').setup({
   },
 
   -- "gc" to comment visual regions/lines
-  { 'numToStr/Comment.nvim', opts = {} },
+  { 'numToStr/Comment.nvim',  opts = {} },
 
   -- telescope ui-select
   {
@@ -379,7 +379,7 @@ vim.api.nvim_create_user_command('LiveGrepGitRoot', live_grep_git_root, {})
 -- See `:help telescope.builtin`
 vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
 vim.keymap.set('n', '<leader><space>', require('telescope.builtin').buffers, { desc = '[ ] Find existing buffers' })
-vim.keymap.set('n', '<leader>/', function()
+vim.keymap.set('n', '/', function()
   -- You can pass additional configuration to telescope to change theme, layout, etc.
   require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
     winblend = 10,
@@ -600,7 +600,9 @@ lsp_capabilities.textDocument.completion.completionItem.snippetSupport = true
 -- neovide configuration
 if vim.g.neovide then
   -- vim.o.guifont = "Fira Code,Symbols Nerd Font Mono:h13"
-  vim.o.guifont = "BlexMono Nerd Font:h13"
+  -- vim.o.guifont = "BlexMono Nerd Font,Symbols Nerd Font Mono:h13"
+  vim.o.guifont = "Victor Mono,Symbols Nerd Font Mono:h13"
+  -- vim.o.guifont = "CommitMonoLigatures,Symbols Nerd Font Mono:h13"
 
   vim.opt.linespace = 0
 
@@ -625,5 +627,5 @@ if vim.g.neovide then
   vim.g.neovide_cursor_vfx_particle_density = 7.0
   vim.g.neovide_cursor_vfx_particle_speed = 10.0
   vim.g.neovide_cursor_vfx_particle_phase = 1.5 -- only for railgun
-  vim.g.neovide_cursor_vfx_particle_curl = 1.0 -- only for railgun
+  vim.g.neovide_cursor_vfx_particle_curl = 1.0  -- only for railgun
 end
