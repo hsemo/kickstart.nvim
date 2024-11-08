@@ -48,7 +48,7 @@ require('lazy').setup({
 
       -- Useful status updates for LSP
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      { 'j-hui/fidget.nvim',       opts = {} },
+      { 'j-hui/fidget.nvim', opts = {} },
 
       -- Additional lua configuration, makes nvim stuff amazing!
       'folke/neodev.nvim',
@@ -163,7 +163,7 @@ require('lazy').setup({
     'navarasu/onedark.nvim',
     priority = 1000,
     config = function()
-      require('onedark').setup({
+      require('onedark').setup {
         style = 'deep',
         transparent = false,
         -- toggle theme style ---
@@ -178,14 +178,13 @@ require('lazy').setup({
           keywords = 'bold',
           functions = 'none',
           strings = 'none',
-          variables = 'none'
+          variables = 'none',
         },
 
         highlights = {
-          ["@comment"] = { fg = '#737380' },
+          ['@comment'] = { fg = '#737380' },
         },
-
-      })
+      }
       vim.cmd.colorscheme 'onedark'
     end,
   },
@@ -199,7 +198,7 @@ require('lazy').setup({
     opts = {
       scope = {
         show_start = false,
-        show_end = false
+        show_end = false,
       },
       indent = {
         -- Alternatives:
@@ -227,17 +226,17 @@ require('lazy').setup({
         --     • `┋`
         --   • center aligned double
         --     • `║`
-        char = "┃"
-      }
+        char = '┃',
+      },
     },
   },
 
   -- "gc" to comment visual regions/lines
-  { 'numToStr/Comment.nvim',  opts = {} },
+  { 'numToStr/Comment.nvim', opts = {} },
 
   -- telescope ui-select
   {
-    'nvim-telescope/telescope-ui-select.nvim'
+    'nvim-telescope/telescope-ui-select.nvim',
   },
 
   -- Fuzzy Finder (files, lsp, etc)
@@ -260,12 +259,12 @@ require('lazy').setup({
       },
     },
     config = function()
-      require("telescope").setup {
+      require('telescope').setup {
         extensions = {
-          ["ui-select"] = {
-            require("telescope.themes").get_dropdown {
+          ['ui-select'] = {
+            require('telescope.themes').get_dropdown {
               -- even more opts
-            }
+            },
 
             -- pseudo code / specification for writing custom displays, like the one
             -- for "codeactions"
@@ -280,13 +279,13 @@ require('lazy').setup({
             --      do the following
             --   codeactions = false,
             -- }
-          }
-        }
+          },
+        },
       }
       -- To get ui-select loaded and working with telescope, you need to call
       -- load_extension, somewhere after setup function:
-      require("telescope").load_extension("ui-select")
-    end
+      require('telescope').load_extension 'ui-select'
+    end,
   },
 
   -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
@@ -305,13 +304,16 @@ require('lazy').setup({
 }, {})
 
 -- loading options
-require("config.options")
+require 'config.options'
 
 -- loading keymaps
-require("config.keymaps")
+require 'config.keymaps'
 
 -- loading autocmds
-require("config.autocmds")
+require 'config.autocmds'
+
+-- loading custom snippets
+require 'config.snippets'
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
@@ -379,7 +381,7 @@ vim.api.nvim_create_user_command('LiveGrepGitRoot', live_grep_git_root, {})
 -- See `:help telescope.builtin`
 vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
 vim.keymap.set('n', '<leader><space>', require('telescope.builtin').buffers, { desc = '[ ] Find existing buffers' })
-vim.keymap.set('n', '/', function()
+vim.keymap.set('n', '<leader>/', function()
   -- You can pass additional configuration to telescope to change theme, layout, etc.
   require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
     winblend = 10,
@@ -403,7 +405,6 @@ vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc
 vim.keymap.set('n', '<leader>sG', ':LiveGrepGitRoot<cr>', { desc = '[S]earch by [G]rep on Git Root' })
 vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
 vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = '[S]earch [R]esume' })
-
 
 -- [[ Configure LSP ]]
 --  This function gets run when an LSP connects to a particular buffer.
@@ -565,17 +566,17 @@ cmp.setup {
             return {}
           end
           return { buf }
-        end
+        end,
       },
     },
     { name = 'nvim_lua' },
     { name = 'fish' },
     -- { name = 'rg' },
-  }
+  },
 }
 
-local lspconfig = require('lspconfig')
-local configs = require('lspconfig/configs')
+local lspconfig = require 'lspconfig'
+local configs = require 'lspconfig/configs'
 local lsp_capabilities = vim.lsp.protocol.make_client_capabilities()
 lsp_capabilities.textDocument.completion.completionItem.snippetSupport = true
 
@@ -596,17 +597,17 @@ lsp_capabilities.textDocument.completion.completionItem.snippetSupport = true
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
 
-
 -- neovide configuration
 if vim.g.neovide then
   -- vim.o.guifont = "Fira Code,Symbols Nerd Font Mono:h13"
   -- vim.o.guifont = "BlexMono Nerd Font,Symbols Nerd Font Mono:h13"
-  vim.o.guifont = "Victor Mono,Symbols Nerd Font Mono:h13"
+  vim.o.guifont = 'VictorMono Nerd Font,Symbols Nerd Font Mono:h16'
   -- vim.o.guifont = "CommitMonoLigatures,Symbols Nerd Font Mono:h13"
 
   vim.opt.linespace = 0
 
   vim.g.neovide_transparency = 1.0
+  -- vim.g.neovide_window_blurred = true
   vim.g.neovide_position_animation_length = 0.15
   vim.g.neovide_scroll_animation_length = 0.2
   vim.g.neovide_scroll_animation_far_lines = 1
@@ -614,18 +615,18 @@ if vim.g.neovide then
   vim.g.neovide_refresh_rate = 60
 
   vim.g.neovide_cursor_animation_length = 0.05
-  vim.g.neovide_cursor_trail_size = 0.2
+  vim.g.neovide_cursor_trail_size = 0.5
   vim.g.neovide_cursor_antialiasing = true
   vim.g.neovide_cursor_animate_in_insert_mode = true
   vim.g.neovide_cursor_animate_command_line = true
   vim.g.neovide_cursor_unfocused_outline_width = 0.125
-  vim.g.neovide_cursor_smooth_blink = false
+  vim.g.neovide_cursor_smooth_blink = true
   -- (long) railgun, torpedo, pixiedust
   -- (short) sonicboom, ripple, wireframe,
-  vim.g.neovide_cursor_vfx_mode = "sonicboom"
+  vim.g.neovide_cursor_vfx_mode = 'sonicboom'
   vim.g.neovide_cursor_vfx_particle_lifetime = 1.0
   vim.g.neovide_cursor_vfx_particle_density = 7.0
   vim.g.neovide_cursor_vfx_particle_speed = 10.0
   vim.g.neovide_cursor_vfx_particle_phase = 1.5 -- only for railgun
-  vim.g.neovide_cursor_vfx_particle_curl = 1.0  -- only for railgun
+  vim.g.neovide_cursor_vfx_particle_curl = 1.0 -- only for railgun
 end

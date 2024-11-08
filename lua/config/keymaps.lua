@@ -9,7 +9,7 @@ vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 -- Remap for dealing with word wrap
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
-vim.keymap.set('n', 'H', ":Lua")
+vim.keymap.set('n', 'H', ':Lua')
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
@@ -19,58 +19,58 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 
 -- Taken from LazyVim keymaps.lua
 -- Move to window using the <ctrl> hjkl keys
-map("n", "<C-h>", "<C-w>h", { desc = "Go to left window", remap = true })
-map("n", "<C-j>", "<C-w>j", { desc = "Go to lower window", remap = true })
-map("n", "<C-k>", "<C-w>k", { desc = "Go to upper window", remap = true })
-map("n", "<C-l>", "<C-w>l", { desc = "Go to right window", remap = true })
+map('n', '<C-h>', '<C-w>h', { desc = 'Go to left window', remap = true })
+map('n', '<C-j>', '<C-w>j', { desc = 'Go to lower window', remap = true })
+map('n', '<C-k>', '<C-w>k', { desc = 'Go to upper window', remap = true })
+map('n', '<C-l>', '<C-w>l', { desc = 'Go to right window', remap = true })
 
 -- Resize window using <ctrl> arrow keys
-map("n", "<C-S-Up>", "<cmd>resize +2<cr>", { desc = "Increase window height" })
-map("n", "<C-S-Down>", "<cmd>resize -2<cr>", { desc = "Decrease window height" })
-map("n", "<C-S-Left>", "<cmd>vertical resize -2<cr>", { desc = "Decrease window width" })
-map("n", "<C-S-Right>", "<cmd>vertical resize +2<cr>", { desc = "Increase window width" })
+map('n', '<C-S-Up>', '<cmd>resize +2<cr>', { desc = 'Increase window height' })
+map('n', '<C-S-Down>', '<cmd>resize -2<cr>', { desc = 'Decrease window height' })
+map('n', '<C-S-Left>', '<cmd>vertical resize -2<cr>', { desc = 'Decrease window width' })
+map('n', '<C-S-Right>', '<cmd>vertical resize +2<cr>', { desc = 'Increase window width' })
 -- Resize window using <ctrl> hjkl keys
-map("n", "<C-S-k>", "<cmd>resize +2<cr>", { desc = "Increase window height" })
-map("n", "<C-S-j>", "<cmd>resize -2<cr>", { desc = "Decrease window height" })
-map("n", "<C-S-h>", "<cmd>vertical resize -2<cr>", { desc = "Decrease window width" })
-map("n", "<C-S-l>", "<cmd>vertical resize +2<cr>", { desc = "Increase window width" })
+map('n', '<C-S-k>', '<cmd>resize +2<cr>', { desc = 'Increase window height' })
+map('n', '<C-S-j>', '<cmd>resize -2<cr>', { desc = 'Decrease window height' })
+map('n', '<C-S-h>', '<cmd>vertical resize -2<cr>', { desc = 'Decrease window width' })
+map('n', '<C-S-l>', '<cmd>vertical resize +2<cr>', { desc = 'Increase window width' })
 
 -- Move Lines
-map("n", "<A-j>", "<cmd>m .+1<cr>==", { desc = "Move down" })
-map("n", "<A-k>", "<cmd>m .-2<cr>==", { desc = "Move up" })
-map("i", "<A-j>", "<esc><cmd>m .+1<cr>==gi", { desc = "Move down" })
-map("i", "<A-k>", "<esc><cmd>m .-2<cr>==gi", { desc = "Move up" })
-map("v", "<A-j>", ":m '>+1<cr>gv=gv", { desc = "Move down" })
-map("v", "<A-k>", ":m '<-2<cr>gv=gv", { desc = "Move up" })
+map('n', '<A-j>', '<cmd>m .+1<cr>==', { desc = 'Move down' })
+map('n', '<A-k>', '<cmd>m .-2<cr>==', { desc = 'Move up' })
+map('i', '<A-j>', '<esc><cmd>m .+1<cr>==gi', { desc = 'Move down' })
+map('i', '<A-k>', '<esc><cmd>m .-2<cr>==gi', { desc = 'Move up' })
+map('v', '<A-j>', ":m '>+1<cr>gv=gv", { desc = 'Move down' })
+map('v', '<A-k>', ":m '<-2<cr>gv=gv", { desc = 'Move up' })
 
 -- buffers
-map("n", "<leader>b", "", {desc="Buffers"})
+map('n', '<leader>b', '', { desc = 'Buffers' })
 -- map("n", "<S-h>", "<cmd>bprevious<cr>", { desc = "Prev buffer" })
 -- map("n", "<S-l>", "<cmd>bnext<cr>", { desc = "Next buffer" })
 -- map("n", "[b", "<cmd>bprevious<cr>", { desc = "Prev buffer" })
 -- map("n", "]b", "<cmd>bnext<cr>", { desc = "Next buffer" })
 -- map("n", "<leader>bb", "<cmd>e #<cr>", { desc = "Switch to Other Buffer" })
-map("n", "<leader>w", "<cmd>bdelete<cr>", { desc = "Delete Current Buffer" })
-map("n", "<C-x>", "<cmd>bdelete<cr>", { desc = "Delete Current Buffer" })
+map('n', '<leader>d', '<cmd>bdelete<cr>', { desc = 'Delete Current Buffer' })
+map('n', '<C-x>', '<cmd>bdelete<cr>', { desc = 'Delete Current Buffer' })
 
 -- Clear search with <esc>
-map({ "i", "n" }, "<esc>", "<cmd>noh<cr><esc>", { desc = "Escape and clear hlsearch" })
+map({ 'i', 'n' }, '<esc>', '<cmd>noh<cr><esc>', { desc = 'Escape and clear hlsearch' })
 
 -- save file
-map({ "i", "x", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "Save file" })
+map({ 'i', 'x', 'n', 's' }, '<C-s>', '<cmd>w<cr><esc>', { desc = 'Save file' })
 
 -- lazy
-map("n", "<leader>l", "<cmd>Lazy<cr>", { desc = "Lazy" })
+map('n', '<leader>l', '<cmd>Lazy<cr>', { desc = 'Lazy' })
 
 -- new file
 -- map("n", "<leader>fn", "<cmd>enew<cr>", { desc = "New File" })
 
-map("n", "<leader>x", "", {desc="Quickfix"})
-map("n", "<leader>xl", "<cmd>lopen<cr>", { desc = "Location List" })
-map("n", "<leader>xq", "<cmd>copen<cr>", { desc = "Quickfix List" })
+map('n', '<leader>x', '', { desc = 'Quickfix' })
+map('n', '<leader>xl', '<cmd>lopen<cr>', { desc = 'Location List' })
+map('n', '<leader>xq', '<cmd>copen<cr>', { desc = 'Quickfix List' })
 
-map("n", "[q", vim.cmd.cprev, { desc = "Previous quickfix" })
-map("n", "]q", vim.cmd.cnext, { desc = "Next quickfix" })
+map('n', '[q', vim.cmd.cprev, { desc = 'Previous quickfix' })
+map('n', ']q', vim.cmd.cnext, { desc = 'Next quickfix' })
 
 ------------------------------------ Colorizer
 -- map("n", "<leader>ccc", "<cmd>ColorizerToggle<cr>", { desc = "ColorizerToggle" })
@@ -93,18 +93,18 @@ map("n", "]q", vim.cmd.cnext, { desc = "Next quickfix" })
 ------------------------------------ Window Manipulation
 -- map({ "n", "v" }, "<leader>w", "<C-w>", { desc = "Window" })
 
-map("n", "<leader>ts", ":lua require('onedark').toggle()<cr>", { desc = "Toggle onedark style" })
+map('n', '<leader>ts', ":lua require('onedark').toggle()<cr>", { desc = 'Toggle onedark style' })
 
 -- system clipboard support
-map("n", "<leader>y", '"+y', { desc = "Yank to system clipboard" })
-map("v", "<leader>y", '"+y', { desc = "Yank to system clipboard" })
-map("n", "<leader>Y", '"+Y', { desc = "Yank to system clipboard" })
-map("v", "<leader>Y", '"+Y', { desc = "Yank to system clipboard" })
+map('n', '<leader>y', '"+y', { desc = 'Yank to system clipboard' })
+map('v', '<leader>y', '"+y', { desc = 'Yank to system clipboard' })
+map('n', '<leader>Y', '"+Y', { desc = 'Yank to system clipboard' })
+map('v', '<leader>Y', '"+Y', { desc = 'Yank to system clipboard' })
 
-map("n", "<leader>p", '"+p', { desc = "Paste from system clipboard" })
-map("v", "<leader>p", '"+p', { desc = "Paste from system clipboard" })
-map("n", "<leader>P", '"+P', { desc = "Paste from system clipboard" })
-map("v", "<leader>P", '"+P', { desc = "Paste from system clipboard" })
+map('n', '<leader>p', '"+p', { desc = 'Paste from system clipboard' })
+map('v', '<leader>p', '"+p', { desc = 'Paste from system clipboard' })
+map('n', '<leader>P', '"+P', { desc = 'Paste from system clipboard' })
+map('v', '<leader>P', '"+P', { desc = 'Paste from system clipboard' })
 
 -- to differentiate between yank and delete
 -- yank to "0 register (default behaviour) and paste from "0 register (custom behaviour)
@@ -119,16 +119,19 @@ map("v", "<leader>P", '"+P', { desc = "Paste from system clipboard" })
 -- map("v", "c", '"0c', { desc = "Cut and change to yank register \"0" })
 
 -- from primeagen
-map("x", "p", '"_dP')
-map("x", "<C-u>", '<C-u>zz')
-map("x", "<C-d>", '<C-d>zz')
+map('x', 'p', '"_dP')
+map('x', '<C-u>', '<C-u>zz')
+map('x', '<C-d>', '<C-d>zz')
 
 -- map({ 'n', 'v' }, '<leader>e', '<cmd>Neotree<cr>', { desc = 'Explorer NeoTree' })
 map({ 'n', 'v' }, '<leader>e', '<cmd>Oil<cr>', { desc = 'Edit parent dir' })
 
 -- Session management
-map('n', '<leader>f', '', {desc = 'SessionManager'})
-map('n', '<leader>ff', '<cmd>SessionManager load_session<cr>', {desc = 'Load session'})
-map('n', '<leader>fd', '<cmd>SessionManager load_current_dir_session<cr>', {desc = 'Load dir session'})
-map('n', '<leader>fg', '<cmd>SessionManager load_git_session<cr>', {desc = 'Load git session'})
-map('n', '<leader>fl', '<cmd>SessionManager load_last_session<cr>', {desc = 'Load last session'})
+map('n', '<leader>f', '', { desc = 'SessionManager' })
+map('n', '<leader>ff', '<cmd>SessionManager load_session<cr>', { desc = 'Load session' })
+map('n', '<leader>fd', '<cmd>SessionManager load_current_dir_session<cr>', { desc = 'Load dir session' })
+map('n', '<leader>fg', '<cmd>SessionManager load_git_session<cr>', { desc = 'Load git session' })
+map('n', '<leader>fl', '<cmd>SessionManager load_last_session<cr>', { desc = 'Load last session' })
+
+-- remove ^ from package.json
+map('n', '<leader>z', '<cmd>%s/\\^//g<cr>', { desc = 'Remove ^ from `package.json`' })
