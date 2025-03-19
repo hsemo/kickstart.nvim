@@ -48,7 +48,7 @@ require('lazy').setup({
 
       -- Useful status updates for LSP
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      { 'j-hui/fidget.nvim', opts = {} },
+      { 'j-hui/fidget.nvim',       opts = {} },
 
       -- Additional lua configuration, makes nvim stuff amazing!
       'folke/neodev.nvim',
@@ -185,7 +185,7 @@ require('lazy').setup({
           ['@comment'] = { fg = '#737380' },
         },
       }
-      vim.cmd.colorscheme 'onedark'
+      vim.cmd.colorscheme 'gruvbox'
     end,
   },
 
@@ -232,7 +232,7 @@ require('lazy').setup({
   },
 
   -- "gc" to comment visual regions/lines
-  { 'numToStr/Comment.nvim', opts = {} },
+  { 'numToStr/Comment.nvim',  opts = {} },
 
   -- telescope ui-select
   {
@@ -399,6 +399,7 @@ vim.keymap.set('n', '<leader>s/', telescope_live_grep_open_files, { desc = '[S]e
 vim.keymap.set('n', '<leader>ss', require('telescope.builtin').builtin, { desc = '[S]earch [S]elect Telescope' })
 vim.keymap.set('n', '<leader>gf', require('telescope.builtin').git_files, { desc = 'Search [G]it [F]iles' })
 vim.keymap.set('n', '<leader>sf', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
+vim.keymap.set('n', '<leader>w', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
 vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
 vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
 vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
@@ -408,48 +409,86 @@ vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = 
 
 -- [[ Configure LSP ]]
 --  This function gets run when an LSP connects to a particular buffer.
-local on_attach = function(_, bufnr)
-  -- NOTE: Remember that lua is a real programming language, and as such it is possible
-  -- to define small helper and utility functions so you don't have to repeat yourself
-  -- many times.
-  --
-  -- In this case, we create a function that lets us more easily define mappings specific
-  -- for LSP related items. It sets the mode, buffer and description for us each time.
-  local nmap = function(keys, func, desc)
-    if desc then
-      desc = 'LSP: ' .. desc
+-- local on_attach = function(_, bufnr)
+--   vim.print 'server attached'
+--   local nmap = function(keys, func, desc)
+--     if desc then
+--       desc = 'LSP: ' .. desc
+--     end
+--
+--     vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
+--   end
+--
+--   nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
+--   nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
+--
+--   nmap('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
+--   nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
+--   nmap('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
+--   nmap('<leader>D', require('telescope.builtin').lsp_type_definitions, 'Type [D]efinition')
+--   nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
+--   nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+--
+--   -- See `:help K` for why this keymap
+--   nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
+--   nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
+--
+--   -- Lesser used LSP functionality
+--   nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+--   nmap('<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
+--   nmap('<leader>wr', vim.lsp.buf.remove_workspace_folder, '[W]orkspace [R]emove Folder')
+--   nmap('<leader>wl', function()
+--     print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+--   end, '[W]orkspace [L]ist Folders')
+--
+--   -- Create a command `:Format` local to the LSP buffer
+--   vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
+--     vim.lsp.buf.format()
+--   end, { desc = 'Format current buffer with LSP' })
+-- end
+
+-- This is where you enable features that only work
+-- if there is a language server active in the file
+vim.api.nvim_create_autocmd('LspAttach', {
+  desc = 'LSP actions',
+  callback = function(event)
+    -- print(vim.tbl_keys(event))
+    local nmap = function(keys, func, desc)
+      if desc then
+        desc = 'LSP: ' .. desc
+      end
+
+      vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
     end
 
-    vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
-  end
+    nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
+    nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
-  nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
-  nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
+    nmap('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
+    nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
+    nmap('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
+    nmap('<leader>D', require('telescope.builtin').lsp_type_definitions, 'Type [D]efinition')
+    nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
+    nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
 
-  nmap('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
-  nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
-  nmap('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
-  nmap('<leader>D', require('telescope.builtin').lsp_type_definitions, 'Type [D]efinition')
-  nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
-  nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+    -- See `:help K` for why this keymap
+    nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
+    -- nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
 
-  -- See `:help K` for why this keymap
-  nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
-  nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
+    -- Lesser used LSP functionality
+    nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+    nmap('<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
+    nmap('<leader>wr', vim.lsp.buf.remove_workspace_folder, '[W]orkspace [R]emove Folder')
+    nmap('<leader>wl', function()
+      print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+    end, '[W]orkspace [L]ist Folders')
 
-  -- Lesser used LSP functionality
-  nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
-  nmap('<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
-  nmap('<leader>wr', vim.lsp.buf.remove_workspace_folder, '[W]orkspace [R]emove Folder')
-  nmap('<leader>wl', function()
-    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-  end, '[W]orkspace [L]ist Folders')
-
-  -- Create a command `:Format` local to the LSP buffer
-  vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
-    vim.lsp.buf.format()
-  end, { desc = 'Format current buffer with LSP' })
-end
+    -- Create a command `:Format` local to the LSP buffer
+    -- vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
+    --   vim.lsp.buf.format()
+    -- end, { desc = 'Format current buffer with LSP' })
+  end,
+})
 
 -- mason-lspconfig requires that these setup functions are called in this order
 -- before setting up the servers.
@@ -500,7 +539,7 @@ mason_lspconfig.setup_handlers {
   function(server_name)
     require('lspconfig')[server_name].setup {
       capabilities = capabilities,
-      on_attach = on_attach,
+      -- on_attach = on_attach,
       settings = servers[server_name],
       filetypes = (servers[server_name] or {}).filetypes,
     }
@@ -580,6 +619,35 @@ local configs = require 'lspconfig/configs'
 local lsp_capabilities = vim.lsp.protocol.make_client_capabilities()
 lsp_capabilities.textDocument.completion.completionItem.snippetSupport = true
 
+require('lspconfig').lua_ls.setup {
+  root_dir = function(filename, bufnr)
+    vim.fs.root(filename, {
+      '.luarc.json',
+      '.luarc.jsonc',
+      '.luacheckrc',
+      '.stylua.toml',
+      'stylua.toml',
+      'selene.toml',
+      'selene.yml',
+      'init.lua',
+      'main.lua',
+    })
+  end,
+  settings = {
+    Lua = {
+      runtime = {
+        version = 'LuaJIT',
+      },
+      workspace = {
+        library = {
+          '/usr/local/share/luajit-2.1',
+        },
+      },
+    },
+  },
+  single_file_support = true,
+}
+
 -- lspconfig.emmet_ls.setup({
 --   -- on_attach = on_attach,
 --   capabilities = lsp_capabilities,
@@ -628,5 +696,5 @@ if vim.g.neovide then
   vim.g.neovide_cursor_vfx_particle_density = 7.0
   vim.g.neovide_cursor_vfx_particle_speed = 10.0
   vim.g.neovide_cursor_vfx_particle_phase = 1.5 -- only for railgun
-  vim.g.neovide_cursor_vfx_particle_curl = 1.0 -- only for railgun
+  vim.g.neovide_cursor_vfx_particle_curl = 1.0  -- only for railgun
 end

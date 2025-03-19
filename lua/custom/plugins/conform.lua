@@ -1,39 +1,41 @@
 return {
-  "stevearc/conform.nvim",
-  event = { "BufReadPre", "BufNewFile" },
+  'stevearc/conform.nvim',
+  event = { 'BufReadPre', 'BufNewFile' },
   config = function()
-    local conform = require("conform")
+    local conform = require 'conform'
 
-    conform.setup({
+    conform.setup {
       formatters_by_ft = {
-        javascript = { "prettier" },
-        typescript = { "prettier" },
-        javascriptreact = { "prettier" },
-        typescriptreact = { "prettier" },
-        css = { "prettier" },
-        html = { "prettier" },
-        xml = { "prettier" };
-        json = { "prettier" },
-        yaml = { "prettier" },
-        markdown = { "prettier" },
-        graphql = { "prettier" },
-        lua = { "stylua" },
+        javascript = { 'prettier' },
+        typescript = { 'prettier' },
+        javascriptreact = { 'prettier' },
+        typescriptreact = { 'prettier' },
+        css = { 'prettier' },
+        html = { 'prettier' },
+        xml = { 'prettier' },
+        json = { 'prettier' },
+        yaml = { 'prettier' },
+        c = { 'prettier' },
+        cpp = { 'prettier' },
+        markdown = { 'prettier' },
+        graphql = { 'prettier' },
+        lua = { 'stylua' },
         -- python = { "isort", "black" },
-        python = { "black" },
+        python = { 'black' },
       },
       format_on_save = {
         lsp_fallback = true,
-        async = false,
-        timeout_ms = 500,
+        -- async = false,
+        -- timeout_ms = 500,
       },
-    })
+    }
 
-    vim.keymap.set({ "n", "v" }, "<leader>mp", function()
-      conform.format({
+    vim.keymap.set({ 'n', 'v' }, '<leader>mp', function()
+      conform.format {
         lsp_fallback = true,
         async = false,
         timeout_ms = 500,
-      })
-    end, { desc = "Format file or range (in visual mode)" })
+      }
+    end, { desc = 'Format file or range (in visual mode)' })
   end,
 }

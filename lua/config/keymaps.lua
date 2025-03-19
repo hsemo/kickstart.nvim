@@ -19,6 +19,10 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 
 -- Taken from LazyVim keymaps.lua
 -- Move to window using the <ctrl> hjkl keys
+-- map('n', '<leader>i', '<C-w>h', { desc = 'Go to left window', remap = true })
+-- map('n', '<leader>j', '<C-w>j', { desc = 'Go to lower window', remap = true })
+-- map('n', '<leader>k', '<C-w>k', { desc = 'Go to upper window', remap = true })
+-- map('n', '<leader>o', '<C-w>l', { desc = 'Go to right window', remap = true })
 map('n', '<C-h>', '<C-w>h', { desc = 'Go to left window', remap = true })
 map('n', '<C-j>', '<C-w>j', { desc = 'Go to lower window', remap = true })
 map('n', '<C-k>', '<C-w>k', { desc = 'Go to upper window', remap = true })
@@ -45,11 +49,6 @@ map('v', '<A-k>', ":m '<-2<cr>gv=gv", { desc = 'Move up' })
 
 -- buffers
 map('n', '<leader>b', '', { desc = 'Buffers' })
--- map("n", "<S-h>", "<cmd>bprevious<cr>", { desc = "Prev buffer" })
--- map("n", "<S-l>", "<cmd>bnext<cr>", { desc = "Next buffer" })
--- map("n", "[b", "<cmd>bprevious<cr>", { desc = "Prev buffer" })
--- map("n", "]b", "<cmd>bnext<cr>", { desc = "Next buffer" })
--- map("n", "<leader>bb", "<cmd>e #<cr>", { desc = "Switch to Other Buffer" })
 map('n', '<leader>d', '<cmd>bdelete<cr>', { desc = 'Delete Current Buffer' })
 map('n', '<C-x>', '<cmd>bdelete<cr>', { desc = 'Delete Current Buffer' })
 
@@ -135,3 +134,9 @@ map('n', '<leader>fl', '<cmd>SessionManager load_last_session<cr>', { desc = 'Lo
 
 -- remove ^ from package.json
 map('n', '<leader>z', '<cmd>%s/\\^//g<cr>', { desc = 'Remove ^ from `package.json`' })
+
+-- custom lsp keybindings
+map('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>', { desc = 'Go to definition' })
+
+-- Neogit
+map('n', '<leader>ng', '<cmd>Neogit<cr>', { desc = 'Neogit' })
