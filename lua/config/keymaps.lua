@@ -9,12 +9,16 @@ vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 -- Remap for dealing with word wrap
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
-vim.keymap.set('n', 'H', ':Lua')
+-- vim.keymap.set('n', 'G', 'Gzz', { silent = true })
+-- vim.keymap.set('n', '<C-u>', '<C-u>zz', { silent = true })
+-- vim.keymap.set('n', '<C-d>', '<C-d>zz', { silent = true })
+-- vim.keymap.set('n', '<C-f>', '<C-f>zz', { silent = true })
+-- vim.keymap.set('n', '<C-b>', '<C-b>zz', { silent = true })
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
--- vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
+vim.keymap.set('n', 'gK', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
 
 -- Taken from LazyVim keymaps.lua
@@ -40,17 +44,27 @@ map('n', '<C-S-h>', '<cmd>vertical resize -2<cr>', { desc = 'Decrease window wid
 map('n', '<C-S-l>', '<cmd>vertical resize +2<cr>', { desc = 'Increase window width' })
 
 -- Move Lines
-map('n', '<A-j>', '<cmd>m .+1<cr>==', { desc = 'Move down' })
-map('n', '<A-k>', '<cmd>m .-2<cr>==', { desc = 'Move up' })
-map('i', '<A-j>', '<esc><cmd>m .+1<cr>==gi', { desc = 'Move down' })
-map('i', '<A-k>', '<esc><cmd>m .-2<cr>==gi', { desc = 'Move up' })
-map('v', '<A-j>', ":m '>+1<cr>gv=gv", { desc = 'Move down' })
-map('v', '<A-k>', ":m '<-2<cr>gv=gv", { desc = 'Move up' })
+-- map('n', '<A-j>', '<cmd>m .+1<cr>==', { desc = 'Move down' })
+-- map('n', '<A-k>', '<cmd>m .-2<cr>==', { desc = 'Move up' })
+-- map('i', '<A-j>', '<esc><cmd>m .+1<cr>==gi', { desc = 'Move down' })
+-- map('i', '<A-k>', '<esc><cmd>m .-2<cr>==gi', { desc = 'Move up' })
+-- map('v', '<A-j>', ":m '>+1<cr>gv=gv", { desc = 'Move down' })
+-- map('v', '<A-k>', ":m '<-2<cr>gv=gv", { desc = 'Move up' })
+-- Move Lines for MacOS
+map('n', '<M-j>', '<cmd>m .+1<cr>==', { desc = 'Move down' })
+map('n', '<M-k>', '<cmd>m .-2<cr>==', { desc = 'Move up' })
+map('i', '<M-j>', '<esc><cmd>m .+1<cr>==gi', { desc = 'Move down' })
+map('i', '<M-k>', '<esc><cmd>m .-2<cr>==gi', { desc = 'Move up' })
+map('v', '<M-j>', ":m '>+1<cr>gv=gv", { desc = 'Move down' })
+map('v', '<M-k>', ":m '<-2<cr>gv=gv", { desc = 'Move up' })
 
 -- buffers
-map('n', '<leader>b', '', { desc = 'Buffers' })
-map('n', '<leader>d', '<cmd>bdelete<cr>', { desc = 'Delete Current Buffer' })
-map('n', '<C-x>', '<cmd>bdelete<cr>', { desc = 'Delete Current Buffer' })
+map('n', '<leader>b', '<cmd>BufferPick<cr>', { desc = 'Buffers Pick' })
+map('n', '<leader>d', '<cmd>BufferClose<cr>', { desc = 'Delete Current Buffer' })
+map('n', '<leader>D', '<cmd>BufferPick<cr>', { desc = 'Buffers Pick Delete' })
+map('n', '<C-x>', '<cmd>BufferClose<cr>', { desc = 'Delete Current Buffer' })
+map('n', '<S-h>', '<cmd>BufferPrevious<cr>', { desc = 'Previous buffer' })
+map('n', '<S-l>', '<cmd>BufferNext<cr>', { desc = 'Next buffer' })
 
 -- Clear search with <esc>
 map({ 'i', 'n' }, '<esc>', '<cmd>noh<cr><esc>', { desc = 'Escape and clear hlsearch' })
@@ -69,7 +83,9 @@ map('n', '<leader>xl', '<cmd>lopen<cr>', { desc = 'Location List' })
 map('n', '<leader>xq', '<cmd>copen<cr>', { desc = 'Quickfix List' })
 
 map('n', '[q', vim.cmd.cprev, { desc = 'Previous quickfix' })
+map('n', '<M-k>', vim.cmd.cprev, { desc = 'Previous quickfix' })
 map('n', ']q', vim.cmd.cnext, { desc = 'Next quickfix' })
+map('n', '<M-j>', vim.cmd.cnext, { desc = 'Next quickfix' })
 
 ------------------------------------ Colorizer
 -- map("n", "<leader>ccc", "<cmd>ColorizerToggle<cr>", { desc = "ColorizerToggle" })
@@ -92,7 +108,7 @@ map('n', ']q', vim.cmd.cnext, { desc = 'Next quickfix' })
 ------------------------------------ Window Manipulation
 -- map({ "n", "v" }, "<leader>w", "<C-w>", { desc = "Window" })
 
-map('n', '<leader>ts', ":lua require('onedark').toggle()<cr>", { desc = 'Toggle onedark style' })
+-- map('n', '<leader>ts', ":lua require('onedark').toggle()<cr>", { desc = 'Toggle onedark style' })
 
 -- system clipboard support
 map('n', '<leader>y', '"+y', { desc = 'Yank to system clipboard' })
@@ -131,12 +147,13 @@ map('n', '<leader>ff', '<cmd>SessionManager load_session<cr>', { desc = 'Load se
 map('n', '<leader>fd', '<cmd>SessionManager load_current_dir_session<cr>', { desc = 'Load dir session' })
 map('n', '<leader>fg', '<cmd>SessionManager load_git_session<cr>', { desc = 'Load git session' })
 map('n', '<leader>fl', '<cmd>SessionManager load_last_session<cr>', { desc = 'Load last session' })
+map('n', '<leader>fs', '<cmd>SessionManager save_current_session<cr>', { desc = 'Save current session' })
 
 -- remove ^ from package.json
 map('n', '<leader>z', '<cmd>%s/\\^//g<cr>', { desc = 'Remove ^ from `package.json`' })
 
--- custom lsp keybindings
-map('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>', { desc = 'Go to definition' })
-
 -- Neogit
 map('n', '<leader>ng', '<cmd>Neogit<cr>', { desc = 'Neogit' })
+
+-- LSP
+map({ 'n', 'v' }, '<leader>gw', '<cmd>lua vim.lsp.buf.format()<cr>', { desc = 'Format by LSP' })

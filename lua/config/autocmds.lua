@@ -10,3 +10,15 @@
 -- 		vim.opt.shiftwidth = 2
 -- 	end,
 -- })
+
+-- keep cursor centered on most moves
+-- vim.api.nvim_create_autocmd({ 'CursorMoved' }, {
+-- 	callback = function()
+-- 		-- check last key pressed
+-- 		vim.cmd 'normal! zz'
+-- 		-- local key = vim.fn.getcharstr()
+-- 		-- if it's a scroll command, don't force zz
+-- 		-- if key ~= '<C-d>' and key ~= '<C-u>' and key ~= '<C-f>' and key ~= '<C-b>' then
+-- 		-- end
+-- 	end,
+-- })

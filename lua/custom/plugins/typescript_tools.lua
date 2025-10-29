@@ -8,7 +8,7 @@ return {
         client.server_capabilities.documentRangeFormattingProvider = false
       end,
       settings = {
-        tsserver_path = '/Users/apple/.volta/tools/shared/typescript/lib/tsserver.js',
+        -- tsserver_path = '/Users/abhishek/.volta/tools/shared/typescript/lib/tsserver.js',
       },
     }
   end,

@@ -12,31 +12,31 @@ return {
     require('nvim-treesitter.configs').setup {
       -- Add languages to be installed here that you want installed for treesitter
       ensure_installed = {
-        "bash",
-        "c",
-        "css",
-        "diff",
-        "fish",
-        "html",
-        "hyprlang",
-        "javascript",
-        "jsdoc",
-        "json",
-        "jsonc",
-        "lua",
-        "luadoc",
-        "luap",
-        "markdown",
-        "markdown_inline",
-        "python",
-        "query",
-        "regex",
-        "toml",
-        "tsx",
-        "typescript",
-        "vim",
-        "vimdoc",
-        "yaml",
+        'bash',
+        'c',
+        'css',
+        'diff',
+        'fish',
+        'html',
+        'hyprlang',
+        'javascript',
+        'jsdoc',
+        'json',
+        'jsonc',
+        'lua',
+        'luadoc',
+        'luap',
+        'markdown',
+        'markdown_inline',
+        'python',
+        'query',
+        'regex',
+        'toml',
+        'tsx',
+        'typescript',
+        'vim',
+        'vimdoc',
+        'yaml',
       },
 
       version = false,
@@ -115,8 +115,8 @@ return {
     }
 
     -- hyprlang treesitter file type support
-    vim.filetype.add({
-      pattern = { [".*/hypr/.*%.conf"] = "hyprlang" },
-    })
-  end, 0)
+    vim.filetype.add {
+      pattern = { ['.*/hypr/.*%.conf'] = 'hyprlang' },
+    }
+  end, 0),
 }

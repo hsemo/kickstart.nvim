@@ -19,6 +19,7 @@ return {
         cpp = { 'prettier' },
         markdown = { 'prettier' },
         graphql = { 'prettier' },
+        -- dart = { 'dart_format' },
         lua = { 'stylua' },
         -- python = { "isort", "black" },
         python = { 'black' },
