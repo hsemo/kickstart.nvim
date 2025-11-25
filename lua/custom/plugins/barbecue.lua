@@ -13,4 +13,7 @@ return {
       },
     }
   end,
+  opts = {
+    -- configurations go here
+  },
 }
