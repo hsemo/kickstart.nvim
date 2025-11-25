@@ -185,7 +185,7 @@ require('lazy').setup({
           ['@comment'] = { fg = '#737380' },
         },
       }
-      vim.cmd.colorscheme 'gruvbox'
+      vim.cmd.colorscheme 'onedark'
     end,
   },
 
@@ -231,9 +231,6 @@ require('lazy').setup({
     },
   },
 
-  -- "gc" to comment visual regions/lines
-  { 'numToStr/Comment.nvim',  opts = {} },
-
   -- telescope ui-select
   {
     'nvim-telescope/telescope-ui-select.nvim',
@@ -259,6 +256,20 @@ require('lazy').setup({
       },
     },
     config = function()
+      local focus_preview = function(prompt_bufnr)
+        local action_state = require 'telescope.actions.state'
+        local picker = action_state.get_current_picker(prompt_bufnr)
+        local prompt_win = picker.prompt_win
+        local previewer = picker.previewer
+        local winid = previewer.state.winid
+        local bufnr = previewer.state.bufnr
+        vim.keymap.set('n', '<Tab>', function()
+          vim.cmd(string.format('noautocmd lua vim.api.nvim_set_current_win(%s)', prompt_win))
+        end, { buffer = bufnr })
+        vim.cmd(string.format('noautocmd lua vim.api.nvim_set_current_win(%s)', winid))
+        -- api.nvim_set_current_win(winid)
+      end
+
       require('telescope').setup {
         extensions = {
           ['ui-select'] = {
@@ -281,6 +292,11 @@ require('lazy').setup({
             -- }
           },
         },
+        mappings = {
+          i = {
+            ['<Tab>'] = focus_preview,
+          },
+        },
       }
       -- To get ui-select loaded and working with telescope, you need to call
       -- load_extension, somewhere after setup function:
@@ -291,7 +307,7 @@ require('lazy').setup({
   -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
   --       These are some example plugins that I've included in the kickstart repository.
   --       Uncomment any of the lines below to enable them.
-  require 'kickstart.plugins.autoformat',
+  -- require 'kickstart.plugins.autoformat',
   -- require 'kickstart.plugins.debug',
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
@@ -314,6 +330,9 @@ require 'config.autocmds'
 
 -- loading custom snippets
 require 'config.snippets'
+
+-- loading toggle_term
+-- require 'config.toggle_term'
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
@@ -399,7 +418,6 @@ vim.keymap.set('n', '<leader>s/', telescope_live_grep_open_files, { desc = '[S]e
 vim.keymap.set('n', '<leader>ss', require('telescope.builtin').builtin, { desc = '[S]earch [S]elect Telescope' })
 vim.keymap.set('n', '<leader>gf', require('telescope.builtin').git_files, { desc = 'Search [G]it [F]iles' })
 vim.keymap.set('n', '<leader>sf', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
-vim.keymap.set('n', '<leader>w', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
 vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
 vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
 vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
@@ -464,11 +482,14 @@ vim.api.nvim_create_autocmd('LspAttach', {
     nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
     nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
-    nmap('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
-    nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
+    nmap('gd', require('telescope.builtin').lsp_definitions, '[G]oto [d]efinition')
+    -- nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+    nmap('gD', require('telescope.builtin').lsp_type_definitions, 'Type [D]efinition')
+    nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [r]eferences')
     nmap('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
-    nmap('<leader>D', require('telescope.builtin').lsp_type_definitions, 'Type [D]efinition')
+    -- nmap('<leader>D', require('telescope.builtin').lsp_type_definitions, 'Type [D]efinition')
     nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
+    nmap('<leader>w', '', '[W]orkspace')
     nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
 
     -- See `:help K` for why this keymap
@@ -476,7 +497,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
     -- nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
 
     -- Lesser used LSP functionality
-    nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
     nmap('<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
     nmap('<leader>wr', vim.lsp.buf.remove_workspace_folder, '[W]orkspace [R]emove Folder')
     nmap('<leader>wl', function()
@@ -495,56 +515,28 @@ vim.api.nvim_create_autocmd('LspAttach', {
 require('mason').setup()
 require('mason-lspconfig').setup()
 
--- Enable the following language servers
---  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
---
---  Add any additional override configuration in the following tables. They will be passed to
---  the `settings` field of the server config. You must look up that documentation yourself.
---
---  If you want to override the default filetypes that your language server will attach to you can
---  define the property 'filetypes' to the map in question.
-local servers = {
-  -- clangd = {},
-  -- gopls = {},
-  -- pyright = {},
-  -- rust_analyzer = {},
-  -- tsserver = {},
-  -- html = { filetypes = { 'html', 'twig', 'hbs'} },
-
-  -- lua_ls = {
-  --   Lua = {
-  --     workspace = { checkThirdParty = false },
-  --     telemetry = { enable = false },
-  --     -- NOTE: toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-  --     -- diagnostics = { disable = { 'missing-fields' } },
-  --   },
-  -- },
-}
-
 -- Setup neovim lua configuration
 require('neodev').setup()
 
 -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
 local capabilities = vim.lsp.protocol.make_client_capabilities()
+-- capabilities = require('blink.cmp').get_lsp_capabilities(capabilities)
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
 -- Ensure the servers above are installed
 local mason_lspconfig = require 'mason-lspconfig'
 
 mason_lspconfig.setup {
-  ensure_installed = vim.tbl_keys(servers),
+  ensure_installed = vim.tbl_keys {},
 }
 
-mason_lspconfig.setup_handlers {
-  function(server_name)
-    require('lspconfig')[server_name].setup {
-      capabilities = capabilities,
-      -- on_attach = on_attach,
-      settings = servers[server_name],
-      filetypes = (servers[server_name] or {}).filetypes,
-    }
-  end,
-}
+-- mason_lspconfig.setup_handlers {
+--   function(server_name)
+--     require('lspconfig')[server_name].setup {
+--       capabilities = capabilities,
+--     }
+--   end,
+-- }
 
 -- [[ Configure nvim-cmp ]]
 -- See `:help cmp`
@@ -614,11 +606,6 @@ cmp.setup {
   },
 }
 
-local lspconfig = require 'lspconfig'
-local configs = require 'lspconfig/configs'
-local lsp_capabilities = vim.lsp.protocol.make_client_capabilities()
-lsp_capabilities.textDocument.completion.completionItem.snippetSupport = true
-
 require('lspconfig').lua_ls.setup {
   root_dir = function(filename, bufnr)
     vim.fs.root(filename, {
@@ -648,19 +635,16 @@ require('lspconfig').lua_ls.setup {
   single_file_support = true,
 }
 
--- lspconfig.emmet_ls.setup({
---   -- on_attach = on_attach,
---   capabilities = lsp_capabilities,
---   filetypes = { "css", "eruby", "html", "javascript", "javascriptreact", "less", "sass", "scss", "svelte", "pug", "typescriptreact", "vue" },
---   init_options = {
---     html = {
---       options = {
---         -- For possible options, see: https://github.com/emmetio/emmet/blob/master/src/config.ts#L79-L267
---         ["bem.enabled"] = true,
---       },
---     },
---   }
--- })
+vim.diagnostic.config {
+  signs = {
+    text = {
+      [vim.diagnostic.severity.ERROR] = 'E', -- or other icon of your choice here, this is just what my config has:
+      [vim.diagnostic.severity.WARN] = 'W',
+      [vim.diagnostic.severity.INFO] = 'I',
+      [vim.diagnostic.severity.HINT] = 'H',
+    },
+  },
+}
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
@@ -673,6 +657,9 @@ if vim.g.neovide then
   -- vim.o.guifont = "CommitMonoLigatures,Symbols Nerd Font Mono:h13"
 
   vim.opt.linespace = 0
+
+  -- macOS
+  vim.g.neovide_input_macos_option_key_is_meta = 'only_left'
 
   vim.g.neovide_transparency = 1.0
   -- vim.g.neovide_window_blurred = true
