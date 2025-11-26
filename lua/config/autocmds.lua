@@ -88,3 +88,12 @@ vim.api.nvim_create_autocmd('LspAttach', {
     -- end, { desc = 'Format current buffer with LSP' })
   end,
 })
+
+-- optimize imports before writing the buffer for js/ts files
+-- vim.api.nvim_create_autocmd('BufWritePre', {
+--   desc = 'Optimize imports for JS/TS',
+--   pattern = { 'javascript', 'typescript', 'html', 'javascriptreact', 'typescriptreact' },
+--   callback = function()
+--     vim.cmd 'TSToolsOrganizeImports'
+--   end,
+-- })
