@@ -6,23 +6,29 @@ return {
 
     conform.setup {
       formatters_by_ft = {
-        javascript = { 'prettier' },
-        typescript = { 'prettier' },
-        javascriptreact = { 'prettier' },
-        typescriptreact = { 'prettier' },
-        css = { 'prettier' },
-        html = { 'prettier' },
-        xml = { 'prettier' },
-        json = { 'prettier' },
-        yaml = { 'prettier' },
-        c = { 'prettier' },
-        cpp = { 'prettier' },
-        markdown = { 'prettier' },
-        graphql = { 'prettier' },
+        javascript = { 'prettierd' },
+        typescript = { 'prettierd' },
+        javascriptreact = { 'prettierd' },
+        typescriptreact = { 'prettierd' },
+        css = { 'prettierd' },
+        html = { 'prettierd' },
+        json = { 'prettierd' },
+        yaml = { 'prettierd' },
+        c = { 'clang_format' },
+        cpp = { 'clang_format' },
+        markdown = { 'prettierd' },
         -- dart = { 'dart_format' },
         lua = { 'stylua' },
-        -- python = { "isort", "black" },
         python = { 'black' },
+        -- kotlin = { 'ktfmt' },
+      },
+      formatters = {
+        ktfmt = {
+          command = 'ktfmt',
+          -- args = {}
+          timeout_ms = 1000,
+          lsp_format = 'only_after_conform',
+        },
       },
       format_on_save = {
         lsp_fallback = true,

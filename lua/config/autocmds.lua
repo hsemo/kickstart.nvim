@@ -34,12 +34,17 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   pattern = '*',
 })
 
+-- save current session before quitting
 vim.api.nvim_create_autocmd('QuitPre', {
   desc = 'Save current session if it exists',
   callback = function()
     local session_manager = require 'session_manager'
 
-    if session_manager.current_dir_session_exists() or vim.fn.confirm('Save current session?', '&Yes\n&No') == 1 then
+    -- if session_manager.current_dir_session_exists() or vim.fn.confirm('Save current session?', '&Yes\n&No') == 1 then
+    --   session_manager.save_current_session()
+    -- end
+
+    if session_manager.current_dir_session_exists() then
       session_manager.save_current_session()
     end
   end,
@@ -61,18 +66,18 @@ vim.api.nvim_create_autocmd('LspAttach', {
     nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
     nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
-    nmap('gd', require('telescope.builtin').lsp_definitions, '[G]oto [d]efinition')
-    -- nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
-    nmap('gD', require('telescope.builtin').lsp_type_definitions, 'Type [D]efinition')
-    nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [r]eferences')
-    nmap('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
-    -- nmap('<leader>D', require('telescope.builtin').lsp_type_definitions, 'Type [D]efinition')
-    nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
-    nmap('<leader>w', '', '[W]orkspace')
-    nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+    -- nmap('gd', require('telescope.builtin').lsp_definitions, '[G]oto [d]efinition')
+    -- -- nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+    -- nmap('gD', require('telescope.builtin').lsp_type_definitions, 'Type [D]efinition')
+    -- nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [r]eferences')
+    -- nmap('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
+    -- -- nmap('<leader>D', require('telescope.builtin').lsp_type_definitions, 'Type [D]efinition')
+    -- nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
+    -- nmap('<leader>w', '', '[W]orkspace')
+    -- nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
 
     -- See `:help K` for why this keymap
-    nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
+    -- nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
     -- nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
 
     -- Lesser used LSP functionality
@@ -92,8 +97,9 @@ vim.api.nvim_create_autocmd('LspAttach', {
 -- optimize imports before writing the buffer for js/ts files
 -- vim.api.nvim_create_autocmd('BufWritePre', {
 --   desc = 'Optimize imports for JS/TS',
---   pattern = { 'javascript', 'typescript', 'html', 'javascriptreact', 'typescriptreact' },
+--   pattern = { '*.js', '*.ts', '*.tsx', '*.jsx' },
 --   callback = function()
---     vim.cmd 'TSToolsOrganizeImports'
+--     vim.cmd 'TSToolsRemoveUnusedImports'
+--     -- vim.cmd 'TSToolsAddMissingImports' -- it's not working properly
 --   end,
 -- })

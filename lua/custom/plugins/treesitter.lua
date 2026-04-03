@@ -14,11 +14,11 @@ return {
       ensure_installed = {
         'bash',
         'c',
+        'cpp',
         'css',
         'diff',
         'fish',
         'html',
-        'hyprlang',
         'javascript',
         'jsdoc',
         'json',

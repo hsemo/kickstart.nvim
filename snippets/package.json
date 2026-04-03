@@ -1,0 +1,8 @@
+{
+  "name": "personal-snippets",
+  "contributes": {
+    "snippets": [
+      { "language": ["javascript", "typescript","typescriptreact", "javascriptreact"], "path": "./react.json" }
+    ]
+  }
+}
