@@ -72,8 +72,8 @@ map({ 'i', 'n' }, '<esc>', '<cmd>noh<cr><esc>', { desc = 'Escape and clear hlsea
 -- save file
 map({ 'i', 'x', 'n', 's' }, '<C-s>', '<cmd>w<cr><esc>', { desc = 'Save file' })
 
--- lazy
-map('n', '<leader>l', '<cmd>Lazy<cr>', { desc = 'Lazy' })
+-- pack
+map('n', '<leader>l', '<cmd>PackUpdate<cr>', { desc = 'Pack Update' })
 
 -- new file
 -- map("n", "<leader>fn", "<cmd>enew<cr>", { desc = "New File" })
