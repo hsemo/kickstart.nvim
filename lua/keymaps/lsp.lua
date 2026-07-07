@@ -25,6 +25,11 @@ function M.on_attach(event)
   end, 'Next diagnostic')
   map('<leader>e', vim.diagnostic.open_float, 'Show diagnostic float')
 
+  -- Winbar breadcrumbs (barbecue.nvim + nvim-navic)
+  if client and client:supports_method('textDocument/documentSymbol') then
+    require('nvim-navic').attach(client, buf)
+  end
+
   -- typescript-tools.nvim extras (TSTools* user commands)
   if client and client.name == 'typescript-tools' then
     map('<leader>co', '<cmd>TSToolsOrganizeImports<cr>', 'Organize imports')

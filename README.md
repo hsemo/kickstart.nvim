@@ -30,7 +30,8 @@ lua/
 │   ├── format.lua
 │   ├── snacks.lua
 │   ├── which-key.lua
-│   └── lualine.lua
+│   ├── lualine.lua
+│   └── barbecue.lua
 │
 ├── lsp/                 # LSP config separate from plugin wiring
 │   ├── capabilities.lua # Shared client capabilities (blink.cmp)
@@ -61,6 +62,7 @@ Add new concerns as sibling files (`keymaps/git.lua`, `plugins/gitsigns.lua`) in
 |--------|---------|
 | [onedark.nvim](https://github.com/navarasu/onedark.nvim) | Colorscheme |
 | [lualine](https://github.com/nvim-lualine/lualine.nvim) | Statusline |
+| [barbecue.nvim](https://github.com/utilyre/barbecue.nvim) | Winbar breadcrumbs (nested code context) |
 | [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) | Syntax highlighting |
 | [mason](https://github.com/mason-org/mason.nvim) | Install LSP servers & formatters |
 | [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig) | LSP wiring (Lua, Python) |
