@@ -8,6 +8,7 @@ return {
       { '<leader>s', group = 'Search' },
       { '<leader>b', group = 'Buffer' },
       { '<leader>c', group = 'Code (TS)' },
+      { '<leader>R', group = 'REST (Kulala)' },
       { '<leader>l', group = 'Lazy' },
       { '<leader>u', group = 'Toggle' },
       { 'g', group = 'Go to (LSP when attached)' },

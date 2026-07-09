@@ -31,7 +31,8 @@ lua/
 │   ├── snacks.lua
 │   ├── which-key.lua
 │   ├── lualine.lua
-│   └── barbecue.lua
+│   ├── barbecue.lua
+│   └── kulala.lua
 │
 ├── lsp/                 # LSP config separate from plugin wiring
 │   ├── capabilities.lua # Shared client capabilities (blink.cmp)
@@ -71,6 +72,7 @@ Add new concerns as sibling files (`keymaps/git.lua`, `plugins/gitsigns.lua`) in
 | [conform.nvim](https://github.com/stevearc/conform.nvim) | Format on save |
 | [snacks.nvim](https://github.com/folke/snacks.nvim) | Picker, explorer, UI utilities |
 | [which-key](https://github.com/folke/which-key.nvim) | Discover keymaps (`<leader>?`) |
+| [kulala.nvim](https://github.com/mistweaverco/kulala.nvim) | HTTP/REST client (`.http` files) |
 
 ## Language support
 
@@ -149,6 +151,17 @@ Press `<leader>?` for buffer-local maps or `<leader><leader>?` for all maps.
 | `[d` / `]d` | Previous / next diagnostic |
 | `<leader>e` | Show diagnostic float |
 
+### HTTP / REST (`plugins/kulala.lua` — in `.http` / `.rest` files)
+
+| Key | Action |
+|-----|--------|
+| `<leader>Rs` | Send request under cursor |
+| `<leader>Ra` | Send all requests in file |
+| `<leader>Rb` | Open HTTP scratchpad |
+| `<leader>Rr` | Replay last request |
+
+Kulala also enables buffer-local keymaps automatically in `.http` files. See [kulala keymaps](https://neovim.getkulala.net/docs/getting-started/keymaps).
+
 ### Format (`plugins/format.lua`)
 
 | Key | Action |
@@ -194,7 +207,7 @@ Microsoft's experimental Go port of tsserver (`@typescript/native-preview`). Laz
 ## Requirements
 
 - Neovim ≥ 0.12
-- `git`, `tar`, `curl`
+- `git`, `tar`, `curl` (Kulala HTTP client)
 - [tree-sitter-cli](https://tree-sitter.github.io/tree-sitter/cli/) ≥ 0.26 (installed via Mason)
 - [ripgrep](https://github.com/BurntSushi/ripgrep) (`rg`) — used by Snacks picker
 - `npm` (for TypeScript in projects)
