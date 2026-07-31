@@ -11,6 +11,7 @@ lua/
 ├── core/                # Editor behaviour (no plugins)
 │   ├── init.lua         # Loads options → keymaps → autocmds
 │   ├── options.lua      # vim.opt defaults
+│   ├── diagnostics.lua  # Diagnostic display + hover float
 │   ├── autocmds.lua     # Autocommands (yank highlight, LspAttach hook)
 │   ├── treesitter.lua   # Highlight + indent autocmds
 │   └── neovide.lua      # GUI-only settings
@@ -32,7 +33,10 @@ lua/
 │   ├── which-key.lua
 │   ├── lualine.lua
 │   ├── barbecue.lua
-│   └── kulala.lua
+│   ├── kulala.lua
+│   ├── persistence.lua
+│   ├── trouble.lua
+│   └── autopairs.lua
 │
 ├── lsp/                 # LSP config separate from plugin wiring
 │   ├── capabilities.lua # Shared client capabilities (blink.cmp)
@@ -61,16 +65,19 @@ Add new concerns as sibling files (`keymaps/git.lua`, `plugins/gitsigns.lua`) in
 
 | Plugin | Purpose |
 |--------|---------|
-| [onedark.nvim](https://github.com/navarasu/onedark.nvim) | Colorscheme |
+| [gruvbox.nvim](https://github.com/ellisonleao/gruvbox.nvim) | Colorscheme |
 | [lualine](https://github.com/nvim-lualine/lualine.nvim) | Statusline |
 | [barbecue.nvim](https://github.com/utilyre/barbecue.nvim) | Winbar breadcrumbs (nested code context) |
+| [persistence.nvim](https://github.com/folke/persistence.nvim) | Per-project session save/restore |
+| [trouble.nvim](https://github.com/folke/trouble.nvim) | Diagnostics, symbols, LSP references |
+| [nvim-autopairs](https://github.com/windwp/nvim-autopairs) | Auto-close brackets/quotes |
 | [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) | Syntax highlighting |
 | [mason](https://github.com/mason-org/mason.nvim) | Install LSP servers & formatters |
 | [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig) | LSP wiring (Lua, Python) |
 | [typescript-tools.nvim](https://github.com/pmizio/typescript-tools.nvim) | JS / TS / React LSP |
 | [blink.cmp](https://github.com/saghen/blink.cmp) | Autocompletion |
 | [conform.nvim](https://github.com/stevearc/conform.nvim) | Format on save |
-| [snacks.nvim](https://github.com/folke/snacks.nvim) | Picker, explorer, UI utilities |
+| [snacks.nvim](https://github.com/folke/snacks.nvim) | Dashboard, picker, lazygit, terminal |
 | [which-key](https://github.com/folke/which-key.nvim) | Discover keymaps (`<leader>?`) |
 | [kulala.nvim](https://github.com/mistweaverco/kulala.nvim) | HTTP/REST client (`.http` files) |
 
@@ -116,11 +123,26 @@ Press `<leader>?` for buffer-local maps or `<leader><leader>?` for all maps.
 | `<leader>l` | Open Lazy plugin manager |
 | `<leader>ul` | Toggle relative line numbers |
 
+### Dashboard & sessions
+
+| Key | Action |
+|-----|--------|
+| `<leader>h` | Open dashboard |
+| `<leader>fp` | Project picker |
+| `<leader>qs` | Restore session for cwd |
+| `<leader>ql` | Restore last session |
+| `<leader>qS` | Select session |
+| `<leader>qd` | Stop saving sessions |
+
+The startup dashboard lists **Projects** (git roots) and restores the matching session via persistence.nvim when you pick one.
+
 ### Find & search (`plugins/snacks.lua`)
 
 | Key | Action |
 |-----|--------|
 | `<leader>e` | File explorer |
+| `<leader>gg` | Lazygit (floating) |
+| `<C-/>` / `<C-_>` | Floating terminal |
 | `<leader><space>` | Smart find files |
 | `<leader>ff` | Find files |
 | `<leader>fg` | Live grep |
@@ -139,17 +161,23 @@ Press `<leader>?` for buffer-local maps or `<leader><leader>?` for all maps.
 |-----|--------|
 | `gd` | Go to definition |
 | `gD` | Go to declaration |
-| `gr` | References |
+| `gr` / `<leader>cr` | References (Trouble) |
 | `gi` | Implementation |
 | `gt` | Type definition |
 | `K` | Hover documentation |
 | `<leader>rn` | Rename symbol |
 | `<leader>ca` | Code action |
+| `<leader>cs` | Document symbols (Trouble) |
+| `<leader>cS` | LSP panel (Trouble) |
 | `<leader>co` | Organize imports (TS/JS only) |
 | `<leader>cu` | Remove unused imports (TS/JS only) |
 | `<leader>cf` | Fix all fixable issues (TS/JS only) |
 | `[d` / `]d` | Previous / next diagnostic |
-| `<leader>e` | Show diagnostic float |
+| `<leader>xd` | Diagnostic float |
+| `<leader>xx` | Workspace diagnostics (Trouble) |
+| `<leader>xX` | Buffer diagnostics (Trouble) |
+
+Diagnostics also show as virtual text and in a **hover float** when the cursor rests on a warning/error.
 
 ### HTTP / REST (`plugins/kulala.lua` — in `.http` / `.rest` files)
 
@@ -211,6 +239,7 @@ Microsoft's experimental Go port of tsserver (`@typescript/native-preview`). Laz
 - [tree-sitter-cli](https://tree-sitter.github.io/tree-sitter/cli/) ≥ 0.26 (installed via Mason)
 - [ripgrep](https://github.com/BurntSushi/ripgrep) (`rg`) — used by Snacks picker
 - `npm` (for TypeScript in projects)
+- `lazygit` on PATH (for `<leader>gg`)
 - A [Nerd Font](https://www.nerdfonts.com/) (recommended)
 
 ## First run

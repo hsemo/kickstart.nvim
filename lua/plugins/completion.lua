@@ -10,7 +10,11 @@ return {
     },
     appearance = { nerd_font_variant = 'mono' },
     completion = {
-      documentation = { auto_show = true },
+      menu = { border = 'rounded' },
+      documentation = {
+        auto_show = true,
+        window = { border = 'rounded' },
+      },
     },
     sources = {
       default = { 'lsp', 'path', 'snippets', 'buffer' },

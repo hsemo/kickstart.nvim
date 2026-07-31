@@ -10,12 +10,15 @@ function M.on_attach(event)
 
   map('gd', vim.lsp.buf.definition, 'Go to definition')
   map('gD', vim.lsp.buf.declaration, 'Go to declaration')
-  map('gr', vim.lsp.buf.references, 'Go to references')
   map('gi', vim.lsp.buf.implementation, 'Go to implementation')
   map('gt', vim.lsp.buf.type_definition, 'Go to type definition')
   map('K', vim.lsp.buf.hover, 'Hover documentation')
   map('<leader>rn', vim.lsp.buf.rename, 'Rename symbol')
   map('<leader>ca', vim.lsp.buf.code_action, 'Code action')
+
+  -- Trouble.nvim for references and symbol browsing
+  map('gr', '<cmd>Trouble lsp_references toggle<cr>', 'References (Trouble)')
+  map('<leader>cr', '<cmd>Trouble lsp_references toggle<cr>', 'References (Trouble)')
 
   map('[d', function()
     vim.diagnostic.jump { count = -1 }
@@ -23,7 +26,7 @@ function M.on_attach(event)
   map(']d', function()
     vim.diagnostic.jump { count = 1 }
   end, 'Next diagnostic')
-  map('<leader>e', vim.diagnostic.open_float, 'Show diagnostic float')
+  map('<leader>xd', vim.diagnostic.open_float, 'Diagnostic float')
 
   -- Winbar breadcrumbs (barbecue.nvim + nvim-navic)
   if client and client:supports_method('textDocument/documentSymbol') then

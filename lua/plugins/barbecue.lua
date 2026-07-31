@@ -23,11 +23,11 @@ return {
     show_modified = true,
     exclude_filetypes = { 'neo-tree', 'alpha', 'dashboard', 'snacks' },
     theme = {
-      normal = { bg = '#282c34', fg = '#abb2bf' },
-      ellipsis = { fg = '#5c6370' },
-      basename = { fg = '#e5c07b', bold = true },
-      context = { fg = '#61afef' },
-      context_media = { fg = '#56b6c2' },
+      normal = { bg = '#282828', fg = '#ebdbb2' },
+      ellipsis = { fg = '#928374' },
+      basename = { fg = '#fabd2f', bold = true },
+      context = { fg = '#83a598' },
+      context_media = { fg = '#8ec07c' },
     },
   },
 }

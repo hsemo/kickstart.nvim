@@ -9,12 +9,29 @@ return {
     picker = { enabled = true },
     explorer = { enabled = true },
     indent = { enabled = false },
-    dashboard = { enabled = false },
+    dashboard = {
+      enabled = true,
+      sections = {
+        { section = 'header' },
+        { section = 'keys', gap = 1, padding = 1 },
+        { section = 'projects', title = 'Projects', padding = 1, limit = 8 },
+        { section = 'recent_files', title = 'Recent Files', padding = 1, limit = 5 },
+        { section = 'startup' },
+      },
+    },
     notifier = { enabled = true, timeout = 3000 },
     input = { enabled = true },
+    lazygit = { enabled = true },
+    terminal = { enabled = true },
   },
   keys = {
-    -- Explorer
+    {
+      '<leader>h',
+      function()
+        Snacks.dashboard()
+      end,
+      desc = 'Dashboard',
+    },
     {
       '<leader>e',
       function()
@@ -22,7 +39,13 @@ return {
       end,
       desc = 'File explorer',
     },
-    -- Find (same bindings as the old telescope setup)
+    {
+      '<leader>fp',
+      function()
+        Snacks.picker.projects()
+      end,
+      desc = 'Projects',
+    },
     {
       '<leader>ff',
       function()
@@ -65,7 +88,6 @@ return {
       end,
       desc = 'Search in current buffer',
     },
-    -- Extra useful pickers
     {
       '<leader><space>',
       function()
@@ -108,6 +130,27 @@ return {
         Snacks.bufdelete()
       end,
       desc = 'Delete buffer',
+    },
+    {
+      '<leader>gg',
+      function()
+        Snacks.lazygit()
+      end,
+      desc = 'Lazygit',
+    },
+    {
+      '<C-/>',
+      function()
+        Snacks.terminal()
+      end,
+      desc = 'Toggle terminal',
+    },
+    {
+      '<C-_>',
+      function()
+        Snacks.terminal()
+      end,
+      desc = 'Toggle terminal',
     },
   },
 }

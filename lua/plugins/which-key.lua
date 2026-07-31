@@ -3,11 +3,15 @@ return {
   event = 'VeryLazy',
   opts = {
     spec = {
+      { '<leader>h', group = 'Home / Dashboard' },
       { '<leader>e', group = 'Explorer' },
       { '<leader>f', group = 'Find' },
       { '<leader>s', group = 'Search' },
       { '<leader>b', group = 'Buffer' },
-      { '<leader>c', group = 'Code (TS)' },
+      { '<leader>c', group = 'Code / LSP' },
+      { '<leader>x', group = 'Trouble / Diagnostics' },
+      { '<leader>q', group = 'Session' },
+      { '<leader>g', group = 'Git' },
       { '<leader>R', group = 'REST (Kulala)' },
       { '<leader>l', group = 'Lazy' },
       { '<leader>u', group = 'Toggle' },

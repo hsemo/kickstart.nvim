@@ -1,16 +1,15 @@
 return {
-  'navarasu/onedark.nvim',
+  'ellisonleao/gruvbox.nvim',
   lazy = false,
   priority = 1000,
   config = function()
-    require('onedark').setup {
-      style = 'deep',
-      transparent = false,
-      code_style = {
-        comments = 'italic',
-        keywords = 'bold',
+    require('gruvbox').setup {
+      contrast = 'hard',
+      italic = {
+        strings = true,
+        comments = true,
       },
     }
-    vim.cmd.colorscheme('onedark')
+    vim.cmd.colorscheme('gruvbox')
   end,
 }
