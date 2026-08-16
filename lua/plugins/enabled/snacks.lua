@@ -13,7 +13,7 @@ return {
       enabled = true,
       timeout = 3000,
     },
-    picker = { enabled = true },
+    picker = { enabled = true, ui_select = true },
     quickfile = { enabled = true },
     scope = { enabled = true },
     scroll = { enabled = false },
@@ -163,34 +163,34 @@ return {
       desc = 'Git Log File',
     },
     -- gh
-    {
-      '<leader>gi',
-      function()
-        Snacks.picker.gh_issue()
-      end,
-      desc = 'GitHub Issues (open)',
-    },
-    {
-      '<leader>gI',
-      function()
-        Snacks.picker.gh_issue { state = 'all' }
-      end,
-      desc = 'GitHub Issues (all)',
-    },
-    {
-      '<leader>gp',
-      function()
-        Snacks.picker.gh_pr()
-      end,
-      desc = 'GitHub Pull Requests (open)',
-    },
-    {
-      '<leader>gP',
-      function()
-        Snacks.picker.gh_pr { state = 'all' }
-      end,
-      desc = 'GitHub Pull Requests (all)',
-    },
+    -- {
+    --   '<leader>gi',
+    --   function()
+    --     Snacks.picker.gh_issue()
+    --   end,
+    --   desc = 'GitHub Issues (open)',
+    -- },
+    -- {
+    --   '<leader>gI',
+    --   function()
+    --     Snacks.picker.gh_issue { state = 'all' }
+    --   end,
+    --   desc = 'GitHub Issues (all)',
+    -- },
+    -- {
+    --   '<leader>gp',
+    --   function()
+    --     Snacks.picker.gh_pr()
+    --   end,
+    --   desc = 'GitHub Pull Requests (open)',
+    -- },
+    -- {
+    --   '<leader>gP',
+    --   function()
+    --     Snacks.picker.gh_pr { state = 'all' }
+    --   end,
+    --   desc = 'GitHub Pull Requests (all)',
+    -- },
     -- Grep
     {
       '<leader>sb',
@@ -242,20 +242,6 @@ return {
         Snacks.picker.autocmds()
       end,
       desc = 'Autocmds',
-    },
-    {
-      '<leader>sb',
-      function()
-        Snacks.picker.lines()
-      end,
-      desc = 'Buffer Lines',
-    },
-    {
-      '<leader>sc',
-      function()
-        Snacks.picker.command_history()
-      end,
-      desc = 'Command History',
     },
     {
       '<leader>sC',
@@ -326,13 +312,6 @@ return {
         Snacks.picker.marks()
       end,
       desc = 'Marks',
-    },
-    {
-      '<leader>sM',
-      function()
-        Snacks.picker.man()
-      end,
-      desc = 'Man Pages',
     },
     {
       '<leader>sp',

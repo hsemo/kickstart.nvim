@@ -18,7 +18,7 @@ return {
     completion = {
       menu = {
         border = 'rounded',
-        winhighlight = 'Normal:Normal,FloatBorder:FloatBorder,CursorLine:BlinkCmpMenuSelection,Search:None',
+        -- winhighlight = 'Normal:Normal,FloatBorder:FloatBorder,CursorLine:BlinkCmpMenuSelection,Search:None',
       },
       documentation = {
         auto_show = true,
