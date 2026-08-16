@@ -1,49 +1,6 @@
 return {
   'lewis6991/hover.nvim',
   lazy = false,
-  -- keys = {
-  --   {
-  --     'K',
-  --     function()
-  --       require('hover').open()
-  --     end,
-  --     desc = 'hover.nvim (open)',
-  --     remap = true,
-  --   },
-  --   {
-  --     'gK',
-  --     function()
-  --       require('hover').enter()
-  --     end,
-  --     desc = 'hover.nvim (enter)',
-  --     remap = true,
-  --   },
-  --
-  --   {
-  --     '<C-p>',
-  --     function()
-  --       require('hover').switch 'previous'
-  --     end,
-  --     { desc = 'hover.nvim (previous source)' },
-  --   },
-  --
-  --   {
-  --     '<C-n>',
-  --     function()
-  --       require('hover').switch 'next'
-  --     end,
-  --     { desc = 'hover.nvim (next source)' },
-  --   },
-  --
-  --   {
-  --     '<MouseMove>',
-  --     function()
-  --       require('hover').mouse()
-  --     end,
-  --     { desc = 'hover.nvim (mouse)' },
-  --   },
-  -- },
-
   config = function()
     require('hover').config {
       --- List of modules names to load as providers.
@@ -68,20 +25,20 @@ return {
       -- to a :h preview-window when pressing the hover keymap.
       preview_window = false,
       title = true,
-      mouse_providers = {
-        'hover.providers.lsp',
-      },
-      mouse_delay = 1000,
     }
 
     -- Setup keymaps
     vim.keymap.set('n', 'K', function()
+      local bufnr = vim.api.nvim_get_current_buf()
+      local hover_win = vim.b[bufnr].hover_preview
+
+      if hover_win and vim.api.nvim_win_is_valid(hover_win) then
+        -- hover window is open, enter it
+        require('hover').enter()
+      end
+
       require('hover').open()
     end, { desc = 'hover.nvim (open)', remap = true })
-
-    vim.keymap.set('n', 'gK', function()
-      require('hover').enter()
-    end, { desc = 'hover.nvim (enter)' })
 
     vim.keymap.set('n', '<C-p>', function()
       require('hover').switch 'previous'
@@ -90,12 +47,5 @@ return {
     vim.keymap.set('n', '<C-n>', function()
       require('hover').switch 'next'
     end, { desc = 'hover.nvim (next source)' })
-
-    -- Mouse support
-    vim.keymap.set('n', '<MouseMove>', function()
-      require('hover').mouse()
-    end, { desc = 'hover.nvim (mouse)' })
-
-    vim.o.mousemoveevent = true
   end,
 }
